@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     public Player playerScript;
 
     private BoardManager boardScript;
-    public int level = 0;
+    private int level = 1;
 
     void Awake()
     {
@@ -41,9 +41,16 @@ public class GameManager : MonoBehaviour
         SceneManager.sceneLoaded -= OnSceneFinishedLoading;
     }
 
+    public void NextLevel()
+    {
+        // TODO : incur a small delay so that the switch aint instant
+        // TODO : perhaps also show floor number (like roguelike showed Day X)
+        level += 1;
+        SceneManager.LoadScene("levelScene");
+    }
+
     private void InitGame()
     {
-        level += 1;
         boardScript.LevelSetup(level);
     }
 

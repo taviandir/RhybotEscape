@@ -74,7 +74,7 @@ public class BoardManager : MonoBehaviour
         else if (tileType == "P")
         {
             InstantiateFloorTile(row, col);
-            var playerObj = InstantiateBoardTile(playerTile, CoordsToPosition(row, col));
+            var playerObj = InstantiateBoardTile(playerTile, CoordsToPosition(row, col), true);
             playerObj.name = "Player";
         }
         else if (tileType == "E")
@@ -109,10 +109,11 @@ public class BoardManager : MonoBehaviour
         return new Vector3(col, -row, 0f);
     }
 
-    private GameObject InstantiateBoardTile(GameObject prefab, Vector3 pos)
+    private GameObject InstantiateBoardTile(GameObject prefab, Vector3 pos, bool isPlayer = false)
     {
         var obj = (GameObject)Instantiate(prefab, pos, Quaternion.identity);
-        obj.transform.parent = board;
+        if (!isPlayer)
+            obj.transform.parent = board;
         return obj;
     }
 

@@ -6,6 +6,8 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public float moveTime = 0.1f;
+    public int energy = 100;
+    public int energyFromBattery = 20;
     public bool isMoving;
     public LayerMask blockingLayer;
 
@@ -39,6 +41,22 @@ public class Player : MonoBehaviour
         AttemptMove(x, y);
     }
 
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.tag == "Battery")
+        {
+            Debug.Log("BATTERY");
+            energy += energyFromBattery;
+            other.gameObject.SetActive(false);
+        }
+        else if (other.tag == "Exit")
+        {
+            Debug.Log("EXIT");
+            enabled = false; // disable this script
+            GameManager.instance.NextLevel();
+        }
+    }
+
     public void AttemptMove(float xDir, float yDir)
     {
         if (Math.Abs(xDir) < float.Epsilon && Math.Abs(yDir) < float.Epsilon) return;
@@ -60,7 +78,7 @@ public class Player : MonoBehaviour
         //    OnCantMove(hitComponent);
     }
 
-    protected bool Move(int xDir, int yDir, out RaycastHit2D hit)
+    private bool Move(int xDir, int yDir, out RaycastHit2D hit)
     {
         Vector2 start = transform.position;
         Vector2 end = start + new Vector2(xDir, yDir);
@@ -69,10 +87,10 @@ public class Player : MonoBehaviour
         hit = Physics2D.Linecast(start, end, blockingLayer);
         boxCollider.enabled = true;
 
-        boxCollider.enabled = true;
-
         if (hit.transform == null)
         {
+            energy -= 1;
+            CheckIfGameOver();
             StartCoroutine(SmoothMovement(end));
             return true;
         }
@@ -81,7 +99,18 @@ public class Player : MonoBehaviour
         return false;
     }
 
-    protected IEnumerator SmoothMovement(Vector3 end)
+    public void CheckIfGameOver()
+    {
+        if (energy <= 0)
+        {
+            // GAME OVER
+            enabled = false;
+            // TODO : trigger something to indicate that game is over
+            Debug.LogWarning("GAME OVER");
+        }
+    }
+
+    private IEnumerator SmoothMovement(Vector3 end)
     {
         isMoving = true;
         float sqrRemainingDistance = (transform.position - end).sqrMagnitude;
