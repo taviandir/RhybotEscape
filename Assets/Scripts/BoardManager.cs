@@ -22,10 +22,10 @@ public class BoardManager : MonoBehaviour
     void Awake()
     {
         board = new GameObject("Board").transform;
-        LoadLevel(1);
+        LevelSetup(1); // TODO : disable - should be activated via GameManager
     }
 
-    public void LoadLevel(int levelNr)
+    public void LevelSetup(int levelNr)
     {
         Debug.Log("LOAD LEVEL DATA");
         string levelFileName = "level" + levelNr;
@@ -119,12 +119,10 @@ public class BoardManager : MonoBehaviour
     {
         var rows = GetRows(levelText);
 
-        Debug.Log("r length: " + rows.Length);
         string[,] level = new string[BoardHeight, BoardWidth];
         for (int r = 0; r < rows.Length; ++r)
         {
             var cols = Cut(rows[r].Trim()); // making sure we're not getting any excess
-            Debug.Log("c length: " + cols.Length);
             for (int c = 0; c < cols.Length; ++c)
             {
                 //Debug.Log(string.Format("r: {0}, c: {1}", r, c));
