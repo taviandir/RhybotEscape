@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
 
     public static GameManager instance;
 
-    public Player playerScript;
+    [HideInInspector] public Player playerScript;
 
     private BoardManager boardScript;
     private int level = 1;
