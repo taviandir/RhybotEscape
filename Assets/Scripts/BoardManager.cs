@@ -22,7 +22,6 @@ public class BoardManager : MonoBehaviour
     void Awake()
     {
         board = new GameObject("Board").transform;
-        LevelSetup(1); // TODO : disable - should be activated via GameManager
     }
 
     public void LevelSetup(int levelNr)
@@ -75,7 +74,8 @@ public class BoardManager : MonoBehaviour
         else if (tileType == "P")
         {
             InstantiateFloorTile(row, col);
-            InstantiateBoardTile(playerTile, CoordsToPosition(row, col));
+            var playerObj = InstantiateBoardTile(playerTile, CoordsToPosition(row, col));
+            playerObj.name = "Player";
         }
         else if (tileType == "E")
         {
@@ -109,10 +109,11 @@ public class BoardManager : MonoBehaviour
         return new Vector3(col, -row, 0f);
     }
 
-    private void InstantiateBoardTile(GameObject prefab, Vector3 pos)
+    private GameObject InstantiateBoardTile(GameObject prefab, Vector3 pos)
     {
         var obj = (GameObject)Instantiate(prefab, pos, Quaternion.identity);
         obj.transform.parent = board;
+        return obj;
     }
 
     private string[,] ParseLevel(string levelText)

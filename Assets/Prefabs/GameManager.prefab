@@ -52,6 +52,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cf0a0028ae446d49bd80be750729e85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerScript: {fileID: 0}
   level: 0
 --- !u!114 &114658237054959500
 MonoBehaviour:

@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour
 
     public static GameManager instance;
 
+    public Player playerScript;
+
     private BoardManager boardScript;
     public int level = 0;
 
@@ -24,26 +26,25 @@ public class GameManager : MonoBehaviour
         
         DontDestroyOnLoad(gameObject);
         boardScript = GetComponent<BoardManager>();
-
         //InitGame();
-    }
-
-    public void InitGame()
-    {
-        level += 1;
-        boardScript.LevelSetup(level);
     }
 
     void OnEnable()
     {
-        Debug.Log("GAME MANAGER ON ENABLE");
+        //Debug.Log("GAME MANAGER ON ENABLE");
         SceneManager.sceneLoaded += OnSceneFinishedLoading;
     }
 
     void OnDisable()
     {
-        Debug.Log("GAME MANAGER ON DISABLE");
+        //Debug.Log("GAME MANAGER ON DISABLE");
         SceneManager.sceneLoaded -= OnSceneFinishedLoading;
+    }
+
+    private void InitGame()
+    {
+        level += 1;
+        boardScript.LevelSetup(level);
     }
 
     private void OnSceneFinishedLoading(Scene scene, LoadSceneMode loadSceneMode)
