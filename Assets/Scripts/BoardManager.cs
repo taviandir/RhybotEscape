@@ -74,13 +74,16 @@ public class BoardManager : MonoBehaviour
         else if (tileType == "P")
         {
             InstantiateFloorTile(row, col);
-            var playerObj = InstantiateBoardTile(playerTile, CoordsToPosition(row, col), true);
+
+            // sends in true in order to put the gameobject in root instead of as a child
+            var playerObj = InstantiateBoardTile(playerTile, CoordsToPosition(row, col), true); 
             playerObj.name = "Player";
         }
         else if (tileType == "E")
         {
             InstantiateFloorTile(row, col);
             InstantiateBoardTile(enemyTiles[Random.Range(0, enemyTiles.Length - 1)], CoordsToPosition(row, col));
+            // TODO : gather enemies in the GameManager
         }
         else if (tileType == "X")
         {
