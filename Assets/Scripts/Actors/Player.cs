@@ -21,24 +21,20 @@ public class Player : MonoBehaviour
         rb2d = GetComponent<Rigidbody2D>();
         boxCollider = GetComponent<BoxCollider2D>();
         inverseMoveTime = 1.0f / moveTime;
-    }
-
-    void Start()
-    {
         GameManager.instance.playerScript = this;
     }
 
     void Update()
     {
-        // NOTE : direct control for testing only
-        var x = Input.GetAxisRaw("Horizontal");
-        var y = Input.GetAxisRaw("Vertical");
+        //// NOTE : direct control for testing only
+        //var x = Input.GetAxisRaw("Horizontal");
+        //var y = Input.GetAxisRaw("Vertical");
 
-        // prevent diagonal movements
-        if (x != 0)
-            y = 0;
+        //// prevent diagonal movements
+        //if (x != 0)
+        //    y = 0;
 
-        AttemptMove(x, y);
+        //AttemptMove(x, y);
     }
 
     void OnTriggerEnter2D(Collider2D other)
