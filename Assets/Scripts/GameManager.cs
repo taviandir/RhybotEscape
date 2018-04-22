@@ -9,7 +9,8 @@ public class GameManager : MonoBehaviour
 
     public static GameManager instance;
 
-    [HideInInspector] public Player playerScript;
+    [HideInInspector] public Player player;
+    [HideInInspector] public ActionManager actionManager;
     public int energy = 100;
 
     private BoardManager boardScript;
@@ -27,6 +28,7 @@ public class GameManager : MonoBehaviour
         
         DontDestroyOnLoad(gameObject);
         boardScript = GetComponent<BoardManager>();
+        actionManager = GetComponent<ActionManager>();
         //InitGame();
     }
 

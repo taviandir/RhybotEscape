@@ -11,6 +11,22 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 1300971166796540}
   m_IsPrefabParent: 1
+--- !u!1 &1115529558028758
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4137106200704910}
+  - component: {fileID: 212646300329400486}
+  m_Layer: 0
+  m_Name: Sprite
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1300971166796540
 GameObject:
   m_ObjectHideFlags: 0
@@ -19,7 +35,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4481218457611948}
-  - component: {fileID: 212951160546507434}
   - component: {fileID: 114199724474072644}
   - component: {fileID: 61496607757017468}
   - component: {fileID: 50179307686944960}
@@ -30,16 +45,30 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!4 &4137106200704910
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1115529558028758}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4481218457611948}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4481218457611948
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1300971166796540}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4, y: -0.7, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -11.5, y: 7.8, z: 10}
   m_LocalScale: {x: 2, y: 2, z: 2}
-  m_Children: []
+  m_Children:
+  - {fileID: 4137106200704910}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -99,24 +128,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c979d1c04abea14cb1ec4ff833deac9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  xDirMove: 0
-  yDirMove: 0
   ySpawnPosition: -20
   arrowMoveTime: 0.5
   spawnWaitMin: 1
   spawnWaitMax: 5
   withinTiming: 0
+  timingCircleObject: {fileID: 1115529558028758}
   withinTimingObject: {fileID: 0}
   normalTimingObject: {fileID: 1106409499254812, guid: 7e2c99057a4a9a446ae43f375050535a,
     type: 2}
   turboTimingObject: {fileID: 1106409499254812, guid: 0f70a6f5ac350554384bcc18ebc3db66,
     type: 2}
---- !u!212 &212951160546507434
+--- !u!212 &212646300329400486
 SpriteRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1300971166796540}
+  m_GameObject: {fileID: 1115529558028758}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0

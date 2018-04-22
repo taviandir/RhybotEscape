@@ -9,32 +9,34 @@ public class TimingManager : MonoBehaviour
     //        keep a list of all spawned arrows,  and on player input, check if any
     //        arrow's "Mathf.Abs(transform.position.y - this.transform.position.y) <= yWithinThreshold".
 
-    [Range(-1, 1)] public int xDirMove = 0;
-    [Range(-1, 1)] public int yDirMove = 0;
+    //[Range(-1, 1)] public int xDirMove = 0;
+    //[Range(-1, 1)] public int yDirMove = 0;
     public float ySpawnPosition = -20f;
     public float arrowMoveTime = 0.5f; // NOTE : the lower the value, the faster it goes!
     public float spawnWaitMin = 1f;
     public float spawnWaitMax = 5f;
     public bool withinTiming = false; // NOTE : public for debug only
+    public GameObject timingCircleObject; // where the sprite is
     public GameObject withinTimingObject;
     public GameObject normalTimingObject;
     public GameObject turboTimingObject;
 
     private Player playerScript;
     private SpriteRenderer spriteRenderer;
-
+    private bool canDoAction;
     private float timeNextSpawn;
 
     void Start()
     {
-        playerScript = GameManager.instance.playerScript;
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        canDoAction = true;
+        playerScript = GameManager.instance.player;
+        spriteRenderer = timingCircleObject.GetComponent<SpriteRenderer>();
         SetNextSpawnTime();
     }
 
     void Update()
     {
-        if (Time.time > timeNextSpawn)
+        if (Time.timeSinceLevelLoad > timeNextSpawn)
         {
             SpawnArrow();
             SetNextSpawnTime();
@@ -43,18 +45,28 @@ public class TimingManager : MonoBehaviour
 
     void LateUpdate()
     {
+        if (!canDoAction) return;
+
         var isActionDown = Input.GetKeyDown(KeyCode.Space);
         if (isActionDown)
         {
+            Debug.Log("ACTION");
+
             spriteRenderer.color = Color.cyan;
-            Invoke("RevertColor", 0.2f);
+            Invoke("ReactivateTiming", 0.25f);
+            canDoAction = false;
+
+            timingCircleObject.transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
+            Invoke("StopActionAnimation", 0.1f);
 
             if (withinTiming)
             {
+                var isTurbo = withinTimingObject.GetComponent<MoveTimingObject>().isTurbo;
                 Destroy(withinTimingObject);
                 withinTimingObject = null;
                 withinTiming = false;
-                playerScript.AttemptMove(xDirMove, yDirMove);
+
+                GameManager.instance.actionManager.PerformAction(isTurbo);
             }
         }
     }
@@ -89,8 +101,14 @@ public class TimingManager : MonoBehaviour
         spawnedArrow.transform.parent = transform;
     }
 
-    private void RevertColor()
+    private void StopActionAnimation() // TODO : poor method name
     {
+        timingCircleObject.transform.localScale = new Vector3(1f, 1f, 1f);
+    }
+
+    private void ReactivateTiming()
+    {
+        canDoAction = true;
         spriteRenderer.color = Color.white;
     }
 }

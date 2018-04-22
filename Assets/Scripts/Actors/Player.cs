@@ -22,7 +22,7 @@ public class Player : MonoBehaviour
         rb2d = GetComponent<Rigidbody2D>();
         boxCollider = GetComponent<BoxCollider2D>();
         inverseMoveTime = 1.0f / moveTime;
-        GameManager.instance.playerScript = this;
+        GameManager.instance.player = this;
         energyText = GameObject.Find("EnergyText").GetComponent<Text>(); // TODO : no string-based retrieval
         energy = GameManager.instance.energy; // transfer energy value from GameManager to this script
         AlterEnergy(0);
@@ -64,25 +64,21 @@ public class Player : MonoBehaviour
         energyText.text = "Energy: " + energy;
     }
 
-    public void AttemptMove(float xDir, float yDir)
+    public void AttemptMove(int xDir, int yDir)
     {
-        if (Math.Abs(xDir) < float.Epsilon && Math.Abs(yDir) < float.Epsilon) return;
         if (isMoving) return;
+        if (xDir == 0 && yDir == 0) return;
+        //if (Math.Abs(xDir) < float.Epsilon && Math.Abs(yDir) < float.Epsilon) return;
 
-        // normalize input
-        int x = xDir > 0 ? 1 : xDir < 0 ? -1 : 0;
-        int y = yDir > 0 ? 1 : yDir < 0 ? -1 : 0;
+        //// normalize input
+        //int x = xDir > 0 ? 1 : xDir < 0 ? -1 : 0;
+        //int y = yDir > 0 ? 1 : yDir < 0 ? -1 : 0;
 
         RaycastHit2D hit;
-        bool canMove = Move(x, y, out hit);
+        bool canMove = Move(xDir, yDir, out hit);
 
         if (hit.transform == null)
             return;
-
-        //T hitComponent = hit.transform.GetComponent<T>();
-
-        //if (!canMove && hitComponent != null)
-        //    OnCantMove(hitComponent);
     }
 
     private bool Move(int xDir, int yDir, out RaycastHit2D hit)

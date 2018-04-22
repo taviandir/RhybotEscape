@@ -4,11 +4,19 @@ using UnityEngine;
 
 public class ActionArrow : MonoBehaviour
 {
-    void Start()
+    public Sprite arrowHighlight;
+
+    private Sprite arrowNormal;
+    private SpriteRenderer sr;
+
+    void Awake()
     {
+        sr = GetComponent<SpriteRenderer>();
+        arrowNormal = sr.sprite;
     }
 
-    void Update()
+    public void SetHighlight(bool highlight)
     {
+        sr.sprite = highlight ? arrowHighlight : arrowNormal;
     }
 }

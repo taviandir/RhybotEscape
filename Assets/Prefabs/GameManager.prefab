@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4552145768433166}
   - component: {fileID: 114658237054959500}
   - component: {fileID: 114244064080423508}
+  - component: {fileID: 114675199306472064}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -53,7 +54,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerScript: {fileID: 0}
-  level: 0
+  actionManager: {fileID: 0}
+  energy: 100
 --- !u!114 &114658237054959500
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -75,3 +77,22 @@ MonoBehaviour:
   - {fileID: 1175114961999172, guid: 1c74e16f58fc38b4baafea1b0e5ac2fc, type: 2}
   batteryTile: {fileID: 1275302785297612, guid: 45462a3b8125fe4448c611bcc1339d6b,
     type: 2}
+--- !u!114 &114675199306472064
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1407052052022326}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45269cf2bdf325d469a3ad0de559fed1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  upArrow: {fileID: 0}
+  leftArrow: {fileID: 0}
+  rightArrow: {fileID: 0}
+  downArrow: {fileID: 0}
+  goUp: 0
+  goLeft: 0
+  goRight: 0
+  goDown: 0
