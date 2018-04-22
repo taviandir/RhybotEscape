@@ -6,10 +6,25 @@ using UnityEngine.UI;
 
 public class GameOverMenu : MonoBehaviour
 {
+    public GameObject gameOverMenu;
+    public GameObject gameWinMenu;
+
     void Start()
     {
-        if (GameManager.instance != null)
+        // UGLY HACK TO END GAME, part 2
+        if (GameManager.instance.level == GameManager.instance.levelEnd)
         {
+            // display win menu
+            gameWinMenu.SetActive(true);
+
+            GameObject.Find("ResultText").GetComponent<Text>().text =
+                "You made it thru all " + (GameManager.instance.level - 1) + " floors! Thanks for playing!";
+        }
+        else
+        {
+            // display game over menu
+            gameOverMenu.SetActive(true);
+
             GameObject.Find("ResultText").GetComponent<Text>().text =
                 "You made it to floor " + GameManager.instance.level + ".";
         }

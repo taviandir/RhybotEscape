@@ -13,6 +13,7 @@ public class Enemy : MonoBehaviour
     public Sprite spriteGuardMode;
     public Sprite spriteAlertMode;
     public GameObject shotPrefab;
+    public bool canMove = true;
 
     private Rigidbody2D rb2d;
     private BoxCollider2D boxCollider;
@@ -197,15 +198,16 @@ public class Enemy : MonoBehaviour
     private void AttemptMove(int xDir, int yDir)
     {
         if (isMoving) return;
+        if (!this.canMove) return;
         if (xDir == 0 && yDir == 0) return;
 
         Debug.Log("ENEMY move: " + xDir + "," + yDir);
 
         RaycastHit2D hit;
-        bool canMove = Move(xDir, yDir, out hit);
+        Move(xDir, yDir, out hit);
 
-        if (hit.transform == null)
-            return;
+        //if (hit.transform == null)
+        //    return;
     }
 
     private bool Move(int xDir, int yDir, out RaycastHit2D hit)

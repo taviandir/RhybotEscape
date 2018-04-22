@@ -58,9 +58,10 @@ public class LevelBuilder : MonoBehaviour
             0 = wall
             1 = floor
             P = player
-            E = enemy
+            E = melee enemy
+            e = ranged enemy
+            r = ranged enemy (cant move)
             X = eXit
-            //D = door
             B = battery
          */
         if (tileType == "0")
@@ -80,15 +81,15 @@ public class LevelBuilder : MonoBehaviour
             var playerObj = InstantiateBoardTile(playerTile, CoordsToPosition(row, col), true); 
             playerObj.name = "Player";
         }
-        else if (tileType == "e")
+        else if (tileType == "e" || tileType == "r")
         {
             InstantiateFloorTile(row, col);
-            InstantiateEnemy(rangedEnemyTile, row, col);
+            InstantiateEnemy(rangedEnemyTile, row, col, tileType != "r");
         }
         else if (tileType == "E")
         {
             InstantiateFloorTile(row, col);
-            InstantiateEnemy(meleeEnemyTile, row, col);
+            InstantiateEnemy(meleeEnemyTile, row, col, tileType != "r");
         }
         else if (tileType == "X")
         {
@@ -110,12 +111,13 @@ public class LevelBuilder : MonoBehaviour
         }
     }
 
-    private void InstantiateEnemy(GameObject prefab, int row, int col)
+    private void InstantiateEnemy(GameObject prefab, int row, int col, bool canMove)
     {
         var enemyObj = InstantiateBoardTile(prefab, CoordsToPosition(row, col));
         enemyObj.transform.parent = enemyParent; // override parent
 
         var enemyScript = enemyObj.GetComponent<Enemy>();
+        enemyScript.canMove = canMove;
         GameManager.instance.enemies.Add(enemyScript);
     }
 

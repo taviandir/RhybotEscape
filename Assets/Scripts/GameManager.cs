@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     public List<Enemy> enemies;
     public int level = 1;
     public int energy = 100;
+    public int levelEnd = 8;
     public float levelStartDelay = 3f;
 
     private bool nextTriggerEnemyMove = false;
@@ -54,7 +55,16 @@ public class GameManager : MonoBehaviour
         // TODO : incur a small delay so that the switch aint instant
         // TODO : perhaps also show floor number (like roguelike showed Day X)
         level += 1;
-        SceneManager.LoadScene("levelScene");
+
+        // UGLY HACK TO END GAME, part 1
+        if (level == levelEnd)
+        {
+            SceneManager.LoadScene("gameOverScene");
+        }
+        else
+        {
+            SceneManager.LoadScene("levelScene");
+        }
     }
 
     public void SetTimingManager(TimingManager tm)
