@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public ActionManager actionManager;
     public int energy = 100;
 
-    private BoardManager boardScript;
+    private LevelBuilder levelBuilder;
     private int level = 1;
 
     void Awake()
@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
         }
         
         DontDestroyOnLoad(gameObject);
-        boardScript = GetComponent<BoardManager>();
+        levelBuilder = GetComponent<LevelBuilder>();
         actionManager = GetComponent<ActionManager>();
         //InitGame();
     }
@@ -54,7 +54,7 @@ public class GameManager : MonoBehaviour
 
     private void InitGame()
     {
-        boardScript.LevelSetup(level);
+        levelBuilder.LevelSetup(level);
     }
 
     private void OnSceneFinishedLoading(Scene scene, LoadSceneMode loadSceneMode)

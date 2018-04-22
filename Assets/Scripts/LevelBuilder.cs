@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class BoardManager : MonoBehaviour
+public class LevelBuilder : MonoBehaviour
 {
     public GameObject[] wallTiles;
     public GameObject[] floorTiles;

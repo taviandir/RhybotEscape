@@ -50,8 +50,6 @@ public class TimingManager : MonoBehaviour
         var isActionDown = Input.GetKeyDown(KeyCode.Space);
         if (isActionDown)
         {
-            Debug.Log("ACTION");
-
             spriteRenderer.color = Color.cyan;
             Invoke("ReactivateTiming", 0.25f);
             canDoAction = false;
