@@ -42,6 +42,7 @@ public class Enemy : MonoBehaviour
         {
             sr.sprite = spriteAlertMode;
             lastKnownPosition = player.transform.position;
+            SpriteFlip((player.transform.position - transform.position).x < 0 ? -1 : 0);
             return true;
         }
         else if (lastKnownPosition != null)
@@ -167,6 +168,11 @@ public class Enemy : MonoBehaviour
         AttemptMove(xDir, yDir);
     }
 
+    private void SpriteFlip(int xDir)
+    {
+        sr.flipX = xDir < 0;
+    }
+
     private bool CanSeePlayer()
     {
         var diff = player.transform.position - transform.position;
@@ -193,19 +199,6 @@ public class Enemy : MonoBehaviour
         if (isMoving) return;
         if (xDir == 0 && yDir == 0) return;
 
-        Debug.Log("ENEMY orig: " + xDir + "," + yDir);
-
-        
-        //if (yDir != 0)
-        //{
-        //    var start = transform.position;
-        //    DoRaycast(start, start + new Vector3(0, yDir, 0), out hitWallCheck);
-        //    if (hitWallCheck.transform != null && hitWallCheck.transform.CompareTag("Wall"))
-        //    {
-        //        yDir = 0;
-        //    }
-        //}
-
         Debug.Log("ENEMY move: " + xDir + "," + yDir);
 
         RaycastHit2D hit;
@@ -224,6 +217,7 @@ public class Enemy : MonoBehaviour
 
         if (hit.transform == null)
         {
+            SpriteFlip(xDir);
             StartCoroutine(SmoothMovement(end));
             return true;
         }

@@ -58,6 +58,7 @@ MonoBehaviour:
   enemies: []
   level: 2
   energy: 100
+  levelStartDelay: 3
 --- !u!114 &114658237054959500
 MonoBehaviour:
   m_ObjectHideFlags: 1

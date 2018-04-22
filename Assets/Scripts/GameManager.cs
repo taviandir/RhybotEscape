@@ -49,7 +49,7 @@ public class GameManager : MonoBehaviour
         timingManager.onTimingCircleEnter -= TriggerEnemy;
     }
 
-    public void NextLevel()
+    public void GoNextLevel()
     {
         // TODO : incur a small delay so that the switch aint instant
         // TODO : perhaps also show floor number (like roguelike showed Day X)
