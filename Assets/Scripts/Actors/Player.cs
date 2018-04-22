@@ -138,7 +138,7 @@ public class Player : MonoBehaviour
 
             // immediately switch scene
             // TODO : have a small delay before switching (just like EXIT should have)
-            SceneManager.LoadScene("gameOverMenu");
+            SceneManager.LoadScene("gameOverScene");
         }
     }
 
