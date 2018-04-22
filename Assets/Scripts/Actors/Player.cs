@@ -53,6 +53,7 @@ public class Player : MonoBehaviour
         {
             Debug.Log("EXIT");
             enabled = false; // disable this script
+            GameManager.instance.energy = energy; // transfer current energy amount to GameManager
             GameManager.instance.NextLevel();
         }
     }

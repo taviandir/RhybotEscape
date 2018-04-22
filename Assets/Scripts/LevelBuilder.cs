@@ -54,6 +54,7 @@ public class LevelBuilder : MonoBehaviour
     private void LoadGameObject(string tileType, int row, int col)
     {
         /*
+            - = <nothing>
             0 = wall
             1 = floor
             P = player
@@ -95,6 +96,10 @@ public class LevelBuilder : MonoBehaviour
             InstantiateFloorTile(row, col);
             InstantiateBoardTile(batteryTile, CoordsToPosition(row, col));
         }
+        else if (tileType == "-")
+        {
+            // EMPTY SPACE
+        }
         else
         {
             Debug.LogError("Unknown tile type(" + row + "," + col + "): " + tileType);
@@ -124,15 +129,21 @@ public class LevelBuilder : MonoBehaviour
     {
         var rows = GetRows(levelText);
 
+        int rIndex = 0;
         string[,] level = new string[BoardHeight, BoardWidth];
         for (int r = 0; r < rows.Length; ++r)
         {
+            // skip comment rows
+            if (rows[r].StartsWith("//")) continue;
+
             var cols = Cut(rows[r].Trim()); // making sure we're not getting any excess
             for (int c = 0; c < cols.Length; ++c)
             {
-                //Debug.Log(string.Format("r: {0}, c: {1}", r, c));
-                level[r, c] = cols[c];
+                Debug.Log(string.Format("r: {0}, c: {1}, rIndex: {2}", r, c, rIndex));
+                level[rIndex, c] = cols[c];
             }
+
+            rIndex += 1;
         }
 
         return level;

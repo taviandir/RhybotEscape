@@ -13,8 +13,9 @@ public class TimingManager : MonoBehaviour
     //[Range(-1, 1)] public int yDirMove = 0;
     public float ySpawnPosition = -20f;
     public float arrowMoveTime = 0.5f; // NOTE : the lower the value, the faster it goes!
-    public float spawnWaitMin = 1f;
-    public float spawnWaitMax = 5f;
+    //public float spawnWaitMin = 1f;
+    //public float spawnWaitMax = 5f;
+    public float spawnWaitTime = 1.5f;
     public bool withinTiming = false; // NOTE : public for debug only
     public GameObject timingCircleObject; // where the sprite is
     public GameObject withinTimingObject;
@@ -36,7 +37,7 @@ public class TimingManager : MonoBehaviour
 
     void Update()
     {
-        if (Time.timeSinceLevelLoad > timeNextSpawn)
+        if (Time.time > timeNextSpawn)
         {
             SpawnArrow();
             SetNextSpawnTime();
@@ -84,7 +85,7 @@ public class TimingManager : MonoBehaviour
     private void SetNextSpawnTime()
     {
         //timeNextSpawn = Time.time + Random.Range(spawnWaitMin, spawnWaitMax);
-        timeNextSpawn = Time.time + 2f;
+        timeNextSpawn = Time.time + spawnWaitTime;
     }
 
     private void SpawnArrow()
