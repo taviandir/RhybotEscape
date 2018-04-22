@@ -4,15 +4,13 @@ using UnityEngine;
 
 public class EnemyShot : MonoBehaviour
 {
-    public float speed = 0.1f;
+    public float speed = 0.2f;
     public int damage = 5;
-    private float inverseMoveTime;
 
-    private Rigidbody2D rb2d;
+    private float inverseMoveTime;
 
     void Awake()
     {
-        rb2d = GetComponent<Rigidbody2D>();
         inverseMoveTime = 1f / speed;
     }
 
@@ -20,11 +18,6 @@ public class EnemyShot : MonoBehaviour
     {
         Init();
     }
-
-    //void Update()
-    //{
-    //    LookAt();
-    //}
 
     public void Init()
     {
@@ -35,11 +28,6 @@ public class EnemyShot : MonoBehaviour
 
     private void LookAt(Vector3 target)
     {
-        //Vector3 diff = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
-        //Vector3 diff = target - transform.position;
-        //diff.Normalize();
-        //float rot_z = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
-        //transform.rotation = Quaternion.Euler(0f, 0f, rot_z - 90);
         transform.right = target - transform.position;
     }
 
@@ -62,7 +50,7 @@ public class EnemyShot : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             var player = other.GetComponent<Player>();
-            player.AlterEnergy(-damage);
+            player.GotShot(damage);
         }
         else if (other.CompareTag("Enemy"))
         {

@@ -25,12 +25,12 @@ public class TimingManager : MonoBehaviour
     [HideInInspector] public event UnityAction onTimingCircleEnter;
 
     private SpriteRenderer spriteRenderer;
-    private bool canDoAction;
+    private bool canDoAction = false;
     private float timeNextSpawn;
 
     void Start()
     {
-        canDoAction = true;
+        //canDoAction = true;
         spriteRenderer = timingCircleObject.GetComponent<SpriteRenderer>();
         SetNextSpawnTime();
         GameManager.instance.SetTimingManager(this);
@@ -52,21 +52,27 @@ public class TimingManager : MonoBehaviour
         var isActionDown = Input.GetKeyDown(KeyCode.Space);
         if (isActionDown)
         {
-            spriteRenderer.color = Color.cyan;
             Invoke("ReactivateTiming", 0.25f);
             canDoAction = false;
 
             timingCircleObject.transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
-            Invoke("StopTimingHighlight", 0.1f);
+            Invoke("RevertTimingScale", 0.1f);
 
             if (withinTiming)
             {
+                spriteRenderer.color = Color.cyan;
+
                 var isTurbo = withinTimingObject.GetComponent<MoveTimingObject>().isTurbo;
                 Destroy(withinTimingObject);
                 withinTimingObject = null;
                 withinTiming = false;
 
                 GameManager.instance.actionManager.PerformAction(isTurbo);
+            }
+            else
+            {
+                spriteRenderer.color = Color.red;
+                GameManager.instance.player.AlterEnergy(-1);
             }
         }
     }
@@ -82,6 +88,11 @@ public class TimingManager : MonoBehaviour
     {
         withinTiming = false;
         withinTimingObject = null;
+    }
+
+    public void Activate()
+    {
+        canDoAction = true;
     }
 
     private void SetNextSpawnTime()
@@ -102,7 +113,7 @@ public class TimingManager : MonoBehaviour
         spawnedArrow.transform.parent = transform;
     }
 
-    private void StopTimingHighlight()
+    private void RevertTimingScale()
     {
         timingCircleObject.transform.localScale = new Vector3(1f, 1f, 1f);
     }

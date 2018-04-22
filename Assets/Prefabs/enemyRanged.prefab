@@ -105,8 +105,7 @@ MonoBehaviour:
     m_Bits: 256
   moveTime: 0.1
   maxViewDistance: 8
-  maxShootDistance: 5
-  shootCooldown: 3
+  maxShootDistance: 6
   spriteNormalMode: {fileID: 21300044, guid: 40fd9689ae877ca4e80a3e4a0031b3d0, type: 3}
   spriteGuardMode: {fileID: 21300040, guid: 40fd9689ae877ca4e80a3e4a0031b3d0, type: 3}
   spriteAlertMode: {fileID: 21300042, guid: 40fd9689ae877ca4e80a3e4a0031b3d0, type: 3}

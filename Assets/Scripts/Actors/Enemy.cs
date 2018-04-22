@@ -8,8 +8,7 @@ public class Enemy : MonoBehaviour
     public LayerMask blockingLayer;
     public float moveTime = 0.1f;
     public float maxViewDistance  = 8f;
-    public float maxShootDistance = 5f;
-    public float shootCooldown = 3f;
+    public float maxShootDistance = 6f;
     public Sprite spriteNormalMode;
     public Sprite spriteGuardMode;
     public Sprite spriteAlertMode;

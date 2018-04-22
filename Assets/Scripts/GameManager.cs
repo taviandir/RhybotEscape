@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class GameManager : MonoBehaviour
     public List<Enemy> enemies;
     public int level = 1;
     public int energy = 100;
+    public float levelStartDelay = 3f;
 
     private bool nextTriggerEnemyMove = false;
     private LevelBuilder levelBuilder;
@@ -77,9 +79,19 @@ public class GameManager : MonoBehaviour
 
     private void InitGame()
     {
+        // TODO : dont find by name
+        GameObject.Find("FloorTextIntro").GetComponent<Text>().text = "Floor " + level;
+        Invoke("StartLevel", levelStartDelay);
+
         enemies.Clear();
         actionManager.Init();
         levelBuilder.LevelSetup(level);
+    }
+
+    private void StartLevel()
+    {
+        GameObject.Find("FloorIntro").SetActive(false); // TODO : dont find by name
+        timingManager.Activate();
     }
 
     private void OnSceneFinishedLoading(Scene scene, LoadSceneMode loadSceneMode)

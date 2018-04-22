@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
     private int energy;
     private Rigidbody2D rb2d;
     private BoxCollider2D boxCollider;
+    private SpriteRenderer sr;
     private Text energyText;
     private float inverseMoveTime;
 
@@ -21,6 +22,8 @@ public class Player : MonoBehaviour
     {
         rb2d = GetComponent<Rigidbody2D>();
         boxCollider = GetComponent<BoxCollider2D>();
+        sr = GetComponent<SpriteRenderer>();
+
         inverseMoveTime = 1.0f / moveTime;
         GameManager.instance.player = this;
         energyText = GameObject.Find("EnergyText").GetComponent<Text>(); // TODO : no string-based retrieval
@@ -61,6 +64,25 @@ public class Player : MonoBehaviour
     public void AutoGameOver()
     {
         AlterEnergy(-energy);
+    }
+
+    public void GotShot(int damage)
+    {
+        if (damage > 0) damage = -damage;
+
+        AlterEnergy(damage);
+        FlashRed();
+    }
+
+    private void FlashRed()
+    {
+        sr.color = Color.red;
+        Invoke("CancelRed", 0.15f);
+    }
+
+    private void CancelRed()
+    {
+        sr.color = Color.white;
     }
 
     public void AlterEnergy(int change)

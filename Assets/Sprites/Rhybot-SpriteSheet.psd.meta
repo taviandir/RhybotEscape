@@ -28,7 +28,7 @@ TextureImporter:
     21300042: enemyRangedAlert
     21300044: enemyRangedNormal
     21300046: enemyShot
-    21300048: Rhybot-SpriteSheet_22
+    21300048: player2
     21300050: Rhybot-SpriteSheet_23
     21300052: Rhybot-SpriteSheet_24
     21300054: Rhybot-SpriteSheet_25
@@ -465,7 +465,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Rhybot-SpriteSheet_22
+      name: player2
       rect:
         serializedVersion: 2
         x: 192
