@@ -54,6 +54,7 @@ public class GameManager : MonoBehaviour
 
     private void InitGame()
     {
+        actionManager.Init();
         levelBuilder.LevelSetup(level);
     }
 

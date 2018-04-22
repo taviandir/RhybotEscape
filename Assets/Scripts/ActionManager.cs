@@ -16,26 +16,7 @@ public class ActionManager : MonoBehaviour
 
     void Awake()
     {
-        GameObject[] arrows = GameObject.FindGameObjectsWithTag("ActionArrow");
-        foreach (var arrow in arrows)
-        {
-            if (arrow.name.ToLowerInvariant().Contains("up"))
-            {
-                upArrow = arrow.GetComponent<ActionArrow>();
-            }
-            else if (arrow.name.ToLowerInvariant().Contains("left"))
-            {
-                leftArrow = arrow.GetComponent<ActionArrow>();
-            }
-            else if (arrow.name.ToLowerInvariant().Contains("right"))
-            {
-                rightArrow = arrow.GetComponent<ActionArrow>();
-            }
-            else if (arrow.name.ToLowerInvariant().Contains("down"))
-            {
-                downArrow = arrow.GetComponent<ActionArrow>();
-            }
-        }
+        
     }
 
     void Update()
@@ -85,6 +66,30 @@ public class ActionManager : MonoBehaviour
             SetLeftMove(true);
             SetRightMove(false);
             SetDownMove(false);
+        }
+    }
+
+    public void Init()
+    {
+        GameObject[] arrows = GameObject.FindGameObjectsWithTag("ActionArrow");
+        foreach (var arrow in arrows)
+        {
+            if (arrow.name.ToLowerInvariant().Contains("up"))
+            {
+                upArrow = arrow.GetComponent<ActionArrow>();
+            }
+            else if (arrow.name.ToLowerInvariant().Contains("left"))
+            {
+                leftArrow = arrow.GetComponent<ActionArrow>();
+            }
+            else if (arrow.name.ToLowerInvariant().Contains("right"))
+            {
+                rightArrow = arrow.GetComponent<ActionArrow>();
+            }
+            else if (arrow.name.ToLowerInvariant().Contains("down"))
+            {
+                downArrow = arrow.GetComponent<ActionArrow>();
+            }
         }
     }
 
