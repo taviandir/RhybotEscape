@@ -2,18 +2,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
     public float moveTime = 0.1f;
-    public int energy = 100;
     public int energyFromBattery = 20;
     public bool isMoving;
     public LayerMask blockingLayer;
 
+    private int energy;
     private Rigidbody2D rb2d;
     private BoxCollider2D boxCollider;
-
+    private Text energyText;
     private float inverseMoveTime;
 
     void Awake()
@@ -22,6 +23,9 @@ public class Player : MonoBehaviour
         boxCollider = GetComponent<BoxCollider2D>();
         inverseMoveTime = 1.0f / moveTime;
         GameManager.instance.playerScript = this;
+        energyText = GameObject.Find("EnergyText").GetComponent<Text>(); // TODO : no string-based retrieval
+        energy = GameManager.instance.energy; // transfer energy value from GameManager to this script
+        AlterEnergy(0);
     }
 
     void Update()
@@ -42,7 +46,7 @@ public class Player : MonoBehaviour
         if (other.tag == "Battery")
         {
             Debug.Log("BATTERY");
-            energy += energyFromBattery;
+            AlterEnergy(energyFromBattery);
             other.gameObject.SetActive(false);
         }
         else if (other.tag == "Exit")
@@ -51,6 +55,13 @@ public class Player : MonoBehaviour
             enabled = false; // disable this script
             GameManager.instance.NextLevel();
         }
+    }
+
+    public void AlterEnergy(int change)
+    {
+        energy += change;
+        CheckIfGameOver();
+        energyText.text = "Energy: " + energy;
     }
 
     public void AttemptMove(float xDir, float yDir)
@@ -85,8 +96,7 @@ public class Player : MonoBehaviour
 
         if (hit.transform == null)
         {
-            energy -= 1;
-            CheckIfGameOver();
+            AlterEnergy(-1);
             StartCoroutine(SmoothMovement(end));
             return true;
         }

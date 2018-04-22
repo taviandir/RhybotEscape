@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
 
     [HideInInspector] public Player playerScript;
+    public int energy = 100;
 
     private BoardManager boardScript;
     private int level = 1;

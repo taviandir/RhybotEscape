@@ -12,16 +12,16 @@ TextureImporter:
     21300010: enemy1
     21300012: exit
     21300014: battery
-    21300016: arrowUp
-    21300018: arrowRight
-    21300020: arrowDown
-    21300022: arrowLeft
-    21300024: timingUp
-    21300026: timingRight
-    21300028: timingDown
-    21300030: timingLeft
-    21300032: Rhybot-SpriteSheet_14
-    21300034: Rhybot-SpriteSheet_15
+    21300016: arrowUpActive
+    21300018: arrowRightActive
+    21300020: arrowDownActive
+    21300022: arrowLeftActive
+    21300024: arrowUp
+    21300026: arrowRight
+    21300028: arrowDown
+    21300030: arrowLeft
+    21300032: timingCircle
+    21300034: timingFillNormal
     21300036: Rhybot-SpriteSheet_16
     21300038: Rhybot-SpriteSheet_17
     21300040: Rhybot-SpriteSheet_18
@@ -241,7 +241,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: arrowUp
+      name: arrowUpActive
       rect:
         serializedVersion: 2
         x: 192
@@ -255,7 +255,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: arrowRight
+      name: arrowRightActive
       rect:
         serializedVersion: 2
         x: 224
@@ -269,7 +269,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: arrowDown
+      name: arrowDownActive
       rect:
         serializedVersion: 2
         x: 0
@@ -283,7 +283,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: arrowLeft
+      name: arrowLeftActive
       rect:
         serializedVersion: 2
         x: 32
@@ -297,7 +297,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: timingUp
+      name: arrowUp
       rect:
         serializedVersion: 2
         x: 64
@@ -311,7 +311,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: timingRight
+      name: arrowRight
       rect:
         serializedVersion: 2
         x: 96
@@ -325,7 +325,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: timingDown
+      name: arrowDown
       rect:
         serializedVersion: 2
         x: 128
@@ -339,7 +339,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: timingLeft
+      name: arrowLeft
       rect:
         serializedVersion: 2
         x: 160
@@ -353,7 +353,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Rhybot-SpriteSheet_14
+      name: timingCircle
       rect:
         serializedVersion: 2
         x: 192
@@ -367,7 +367,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Rhybot-SpriteSheet_15
+      name: timingFillNormal
       rect:
         serializedVersion: 2
         x: 224

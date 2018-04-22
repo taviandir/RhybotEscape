@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MoveArrow : MonoBehaviour
+public class MoveTimingObject : MonoBehaviour
 {
     public float targetYPosition = 3f;
+    public bool isTurbo;
 
     private float inverseMoveTime;
 
@@ -25,7 +26,6 @@ public class MoveArrow : MonoBehaviour
 
     public void Init(float speed)
     {
-        Debug.Log("ARROW MOVE INIT");
         inverseMoveTime = 1f / speed;
         var end = new Vector3(transform.position.x, targetYPosition, 0f);
         StartCoroutine(SmoothMovement(end));

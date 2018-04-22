@@ -26,16 +26,16 @@ public class BoardManager : MonoBehaviour
 
     public void LevelSetup(int levelNr)
     {
-        Debug.Log("LOAD LEVEL DATA");
+        //Debug.Log("LOAD LEVEL DATA");
         string levelFileName = "level" + levelNr;
         string filePath = levelFileName; /* "Levels/" +  */
         Debug.Log(filePath);
         var levelTextAsset = Resources.Load<TextAsset>(filePath);
 
-        Debug.Log("PARSE LEVEL DATA");
+        //Debug.Log("PARSE LEVEL DATA");
         var levelDefinition = ParseLevel(levelTextAsset.text);
 
-        Debug.Log("BUILD LEVEL");
+        //Debug.Log("BUILD LEVEL");
         BuildLevel(levelDefinition);
     }
 
@@ -83,7 +83,7 @@ public class BoardManager : MonoBehaviour
         {
             InstantiateFloorTile(row, col);
             InstantiateBoardTile(enemyTiles[Random.Range(0, enemyTiles.Length - 1)], CoordsToPosition(row, col));
-            // TODO : gather enemies in the GameManager
+            // TODO : gather enemies in the GameManager ?
         }
         else if (tileType == "X")
         {
