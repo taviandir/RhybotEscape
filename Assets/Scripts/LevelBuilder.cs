@@ -10,11 +10,13 @@ public class LevelBuilder : MonoBehaviour
     public GameObject[] floorTiles;
     public GameObject exitTile;
     public GameObject playerTile;
-    public GameObject[] enemyTiles;
+    public GameObject meleeEnemyTile;
+    public GameObject rangedEnemyTile;
     public GameObject batteryTile;
     //public GameObject door;
 
     private Transform board;
+    private Transform enemyParent;
 
     private const int BoardWidth = 23;
     private const int BoardHeight = 16;
@@ -22,6 +24,7 @@ public class LevelBuilder : MonoBehaviour
     public void LevelSetup(int levelNr)
     {
         board = new GameObject("Board").transform;
+        enemyParent = new GameObject("Enemies").transform;
 
         //Debug.Log("LOAD LEVEL DATA");
         string levelFileName = "level" + levelNr;
@@ -77,11 +80,15 @@ public class LevelBuilder : MonoBehaviour
             var playerObj = InstantiateBoardTile(playerTile, CoordsToPosition(row, col), true); 
             playerObj.name = "Player";
         }
+        else if (tileType == "e")
+        {
+            InstantiateFloorTile(row, col);
+            InstantiateEnemy(rangedEnemyTile, row, col);
+        }
         else if (tileType == "E")
         {
             InstantiateFloorTile(row, col);
-            InstantiateBoardTile(enemyTiles[Random.Range(0, enemyTiles.Length - 1)], CoordsToPosition(row, col));
-            // TODO : gather enemies in the GameManager ?
+            InstantiateEnemy(meleeEnemyTile, row, col);
         }
         else if (tileType == "X")
         {
@@ -95,12 +102,21 @@ public class LevelBuilder : MonoBehaviour
         }
         else if (tileType == "-")
         {
-            // EMPTY SPACE
+            // EMPTY SPACE, do nothing
         }
         else
         {
             Debug.LogError("Unknown tile type(" + row + "," + col + "): " + tileType);
         }
+    }
+
+    private void InstantiateEnemy(GameObject prefab, int row, int col)
+    {
+        var enemyObj = InstantiateBoardTile(prefab, CoordsToPosition(row, col));
+        enemyObj.transform.parent = enemyParent; // override parent
+
+        var enemyScript = enemyObj.GetComponent<Enemy>();
+        GameManager.instance.enemies.Add(enemyScript);
     }
 
     private void InstantiateFloorTile(int row, int col)

@@ -57,7 +57,7 @@ public class TimingManager : MonoBehaviour
             canDoAction = false;
 
             timingCircleObject.transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
-            Invoke("StopActionAnimation", 0.1f);
+            Invoke("StopTimingHighlight", 0.1f);
 
             if (withinTiming)
             {
@@ -102,7 +102,7 @@ public class TimingManager : MonoBehaviour
         spawnedArrow.transform.parent = transform;
     }
 
-    private void StopActionAnimation() // TODO : poor method name
+    private void StopTimingHighlight()
     {
         timingCircleObject.transform.localScale = new Vector3(1f, 1f, 1f);
     }

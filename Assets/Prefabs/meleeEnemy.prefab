@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 61954196387302362}
   - component: {fileID: 50168261462223450}
   m_Layer: 8
-  m_Name: enemy1
+  m_Name: meleeEnemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -99,6 +99,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 401a6556b2959fb49b121818837d7e0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyType: 0
+  blockingLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  moveTime: 0.1
+  maxViewDistance: 5.5
 --- !u!212 &212775603989691158
 SpriteRenderer:
   m_ObjectHideFlags: 1

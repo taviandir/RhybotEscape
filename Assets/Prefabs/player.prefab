@@ -99,8 +99,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40baab0b669170e41946a9676d1c5b46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveTime: 0.2
-  energy: 100
+  moveTime: 0.1
   energyFromBattery: 20
   isMoving: 0
   blockingLayer:

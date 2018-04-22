@@ -70,7 +70,7 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        Debug.Log("ENEMY ACTION TRIGGEr");
+        enemies.ForEach(e => e.Action());
         nextTriggerEnemyMove = false;
     }
 

@@ -98,7 +98,7 @@ public class Player : MonoBehaviour
             return true;
         }
 
-        Debug.Log("PLAYER colliison with: " + hit.transform.gameObject.name);
+        Debug.Log("PLAYER collision with: " + hit.transform.gameObject.name);
         return false;
     }
 
