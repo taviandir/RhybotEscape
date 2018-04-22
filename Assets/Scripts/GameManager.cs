@@ -44,7 +44,7 @@ public class GameManager : MonoBehaviour
     {
         //Debug.Log("GAME MANAGER ON DISABLE");
         SceneManager.sceneLoaded -= OnSceneFinishedLoading;
-        timingManager.onTimingCircleEnter -= EnemyAction;
+        timingManager.onTimingCircleEnter -= TriggerEnemy;
     }
 
     public void NextLevel()
@@ -58,14 +58,15 @@ public class GameManager : MonoBehaviour
     public void SetTimingManager(TimingManager tm)
     {
         timingManager = tm;
-        timingManager.onTimingCircleEnter += EnemyAction;
+        timingManager.onTimingCircleEnter += TriggerEnemy;
     }
 
-    private void EnemyAction()
+    private void TriggerEnemy()
     {
         // move on every other trigger
         if (!nextTriggerEnemyMove)
         {
+            enemies.ForEach(e => e.Look());
             nextTriggerEnemyMove = true;
             return;
         }

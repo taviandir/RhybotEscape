@@ -58,6 +58,11 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void AutoGameOver()
+    {
+        AlterEnergy(-energy);
+    }
+
     public void AlterEnergy(int change)
     {
         energy += change;

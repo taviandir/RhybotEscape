@@ -7,18 +7,26 @@ public class Enemy : MonoBehaviour
     public EnemyType enemyType;
     public LayerMask blockingLayer;
     public float moveTime = 0.1f;
-    public float maxViewDistance = 5.5f;
+    public float maxViewDistance  = 8f;
+    public float maxShootDistance = 5f;
+    public Sprite spriteNormalMode;
+    public Sprite spriteGuardMode;
+    public Sprite spriteAlertMode;
+    public GameObject shotPrefab;
 
     private Rigidbody2D rb2d;
     private BoxCollider2D boxCollider;
     private bool isMoving;
     private float inverseMoveTime;
     private Player player;
+    private Vector3? lastKnownPosition;
+    private SpriteRenderer sr;
 
     void Awake()
     {
         rb2d = GetComponent<Rigidbody2D>();
         boxCollider = GetComponent<BoxCollider2D>();
+        sr = GetComponent<SpriteRenderer>();
         inverseMoveTime = 1.0f / moveTime;
     }
 
@@ -27,12 +35,104 @@ public class Enemy : MonoBehaviour
         player = GameManager.instance.player;
     }
 
+    // Triggers enemy to look for the player (no action taken)
+    public bool Look()
+    {
+        if (CanSeePlayer())
+        {
+            sr.sprite = spriteAlertMode;
+            lastKnownPosition = player.transform.position;
+            return true;
+        }
+        else if (lastKnownPosition != null)
+        {
+            sr.sprite = spriteGuardMode;
+        }
+        else
+        {
+            sr.sprite = spriteNormalMode;
+        }
+
+        return false;
+    }
+
     // Triggers enemy to perform an action
     public void Action()
     {
+        if (lastKnownPosition != null && lastKnownPosition.Value == transform.position)
+        {
+            Debug.Log("ENEMY arrived at Last Known Position");
+            lastKnownPosition = null;
+        }
+
         // AI Logic goes here
-        bool seeingPlayer = CanSeePlayer();
+        bool seeingPlayer = Look();
         Debug.Log("SEE PLAYER? " + seeingPlayer);
+
+        if (seeingPlayer)
+        {
+            if (enemyType == EnemyType.Melee)
+            {
+                MoveTowardsPosition(player.transform.position);
+            }
+            else if (enemyType == EnemyType.Ranged)
+            {
+                // TODO : shoot
+                Debug.Log("ENEMY SHOOT");
+            }
+        }
+        // TODO : move towards last known position
+        else if (lastKnownPosition != null)
+        {
+            MoveTowardsPosition(lastKnownPosition.Value);
+        }
+        else
+        {
+            // not seeing player, or any knowledge of where player is
+            DoRandomMove();
+        }
+    }
+
+    private void MoveTowardsPosition(Vector3 targetPosition)
+    {
+        Debug.Log("ENEMY Move towards position");
+        // approach player
+        var diff = targetPosition - transform.position;
+        var xDir = diff.x > 0.1f ? 1 : diff.x < -0.1f ? -1 : 0;
+        var yDir = diff.y > 0.1f ? 1 : diff.y < -0.1f ? -1 : 0;
+
+        Debug.Log(diff);
+
+        // check for walls (avoid failing movement because unit wanted to go diagonally into the wall)
+        RaycastHit2D hitWallCheck;
+        if (xDir != 0)
+        {
+            var start = transform.position;
+            DoRaycast(start, start + new Vector3(xDir, yDir, 0), out hitWallCheck);
+            if (hitWallCheck.transform != null && hitWallCheck.transform.CompareTag("Wall"))
+            {
+                Debug.Log("ADJUSTING DIRECTION DUE TO COLLISION");
+                if (diff.x > diff.y)
+                    yDir = 0;
+                else
+                    xDir = 0;
+
+                //DoRaycast(start, start + new Vector3(xDir, yDir, 0), out hitWallCheck);
+                //if (hitWallCheck.transform != null && hitWallCheck.transform.CompareTag("Wall"))
+                //{
+                //}
+            }
+        }
+
+        AttemptMove(xDir, yDir);
+    }
+
+    private void DoRandomMove()
+    {
+        Debug.Log("ENEMY Random move");
+        var xDir = Random.Range(-1, 2);
+        var yDir = Random.Range(-1, 2);
+        AttemptMove(xDir, yDir);
     }
 
     private bool CanSeePlayer()
@@ -61,6 +161,21 @@ public class Enemy : MonoBehaviour
         if (isMoving) return;
         if (xDir == 0 && yDir == 0) return;
 
+        Debug.Log("ENEMY orig: " + xDir + "," + yDir);
+
+        
+        //if (yDir != 0)
+        //{
+        //    var start = transform.position;
+        //    DoRaycast(start, start + new Vector3(0, yDir, 0), out hitWallCheck);
+        //    if (hitWallCheck.transform != null && hitWallCheck.transform.CompareTag("Wall"))
+        //    {
+        //        yDir = 0;
+        //    }
+        //}
+
+        Debug.Log("ENEMY move: " + xDir + "," + yDir);
+
         RaycastHit2D hit;
         bool canMove = Move(xDir, yDir, out hit);
 
@@ -81,7 +196,15 @@ public class Enemy : MonoBehaviour
             return true;
         }
 
-        Debug.Log("ENEMY collision with: " + hit.transform.gameObject.name);
+        //Debug.Log("ENEMY collision with: " + hit.transform.gameObject.name);
+
+        if (hit.transform.CompareTag("Player") && enemyType == EnemyType.Melee)
+        {
+            Debug.Log("MELEE ENEMY ATTACK");
+            GameManager.instance.player.AutoGameOver();
+            return true;
+        }
+
         return false;
     }
 

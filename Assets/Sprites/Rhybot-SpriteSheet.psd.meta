@@ -9,7 +9,7 @@ TextureImporter:
     21300004: wall1
     21300006: floor1
     21300008: player
-    21300010: enemy1
+    21300010: enemyMeleeAlert
     21300012: exit
     21300014: battery
     21300016: arrowUpActive
@@ -22,11 +22,11 @@ TextureImporter:
     21300030: arrowLeft
     21300032: timingCircle
     21300034: timingFillNormal
-    21300036: Rhybot-SpriteSheet_16
-    21300038: Rhybot-SpriteSheet_17
-    21300040: Rhybot-SpriteSheet_18
-    21300042: Rhybot-SpriteSheet_19
-    21300044: Rhybot-SpriteSheet_20
+    21300036: enemyMeleeNormal
+    21300038: enemyMeleeGuard
+    21300040: enemyRangedGuard
+    21300042: enemyRangedAlert
+    21300044: enemyRangedNormal
     21300046: Rhybot-SpriteSheet_21
     21300048: Rhybot-SpriteSheet_22
     21300050: Rhybot-SpriteSheet_23
@@ -199,7 +199,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: enemy1
+      name: enemyMeleeAlert
       rect:
         serializedVersion: 2
         x: 96
@@ -381,7 +381,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Rhybot-SpriteSheet_16
+      name: enemyMeleeNormal
       rect:
         serializedVersion: 2
         x: 0
@@ -395,7 +395,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Rhybot-SpriteSheet_17
+      name: enemyMeleeGuard
       rect:
         serializedVersion: 2
         x: 32
@@ -409,7 +409,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Rhybot-SpriteSheet_18
+      name: enemyRangedGuard
       rect:
         serializedVersion: 2
         x: 64
@@ -423,7 +423,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Rhybot-SpriteSheet_19
+      name: enemyRangedAlert
       rect:
         serializedVersion: 2
         x: 96
@@ -437,7 +437,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Rhybot-SpriteSheet_20
+      name: enemyRangedNormal
       rect:
         serializedVersion: 2
         x: 128
