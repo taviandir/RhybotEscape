@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -11,10 +10,13 @@ public class GameManager : MonoBehaviour
 
     [HideInInspector] public Player player;
     [HideInInspector] public ActionManager actionManager;
+    public List<Enemy> enemies;
     public int level = 1;
     public int energy = 100;
 
+    private bool nextTriggerEnemyMove = false;
     private LevelBuilder levelBuilder;
+    private TimingManager timingManager;
 
     void Awake()
     {
@@ -25,11 +27,11 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-        
+
         DontDestroyOnLoad(gameObject);
+        enemies = new List<Enemy>();
         levelBuilder = GetComponent<LevelBuilder>();
         actionManager = GetComponent<ActionManager>();
-        //InitGame();
     }
 
     void OnEnable()
@@ -42,6 +44,7 @@ public class GameManager : MonoBehaviour
     {
         //Debug.Log("GAME MANAGER ON DISABLE");
         SceneManager.sceneLoaded -= OnSceneFinishedLoading;
+        timingManager.onTimingCircleEnter -= EnemyAction;
     }
 
     public void NextLevel()
@@ -52,8 +55,28 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene("levelScene");
     }
 
+    public void SetTimingManager(TimingManager tm)
+    {
+        timingManager = tm;
+        timingManager.onTimingCircleEnter += EnemyAction;
+    }
+
+    private void EnemyAction()
+    {
+        // move on every other trigger
+        if (!nextTriggerEnemyMove)
+        {
+            nextTriggerEnemyMove = true;
+            return;
+        }
+
+        Debug.Log("ENEMY ACTION TRIGGEr");
+        nextTriggerEnemyMove = false;
+    }
+
     private void InitGame()
     {
+        enemies.Clear();
         actionManager.Init();
         levelBuilder.LevelSetup(level);
     }

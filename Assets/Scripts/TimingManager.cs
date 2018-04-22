@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 
 public class TimingManager : MonoBehaviour 
@@ -21,8 +22,8 @@ public class TimingManager : MonoBehaviour
     public GameObject withinTimingObject;
     public GameObject normalTimingObject;
     public GameObject turboTimingObject;
+    [HideInInspector] public event UnityAction onTimingCircleEnter;
 
-    private Player playerScript;
     private SpriteRenderer spriteRenderer;
     private bool canDoAction;
     private float timeNextSpawn;
@@ -30,9 +31,9 @@ public class TimingManager : MonoBehaviour
     void Start()
     {
         canDoAction = true;
-        playerScript = GameManager.instance.player;
         spriteRenderer = timingCircleObject.GetComponent<SpriteRenderer>();
         SetNextSpawnTime();
+        GameManager.instance.SetTimingManager(this);
     }
 
     void Update()
@@ -74,6 +75,7 @@ public class TimingManager : MonoBehaviour
     {
         withinTiming = true;
         withinTimingObject = other.gameObject;
+        onTimingCircleEnter.Invoke();
     }
 
     void OnTriggerExit2D(Collider2D other)

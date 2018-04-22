@@ -19,13 +19,10 @@ public class LevelBuilder : MonoBehaviour
     private const int BoardWidth = 23;
     private const int BoardHeight = 16;
 
-    void Awake()
-    {
-        board = new GameObject("Board").transform;
-    }
-
     public void LevelSetup(int levelNr)
     {
+        board = new GameObject("Board").transform;
+
         //Debug.Log("LOAD LEVEL DATA");
         string levelFileName = "level" + levelNr;
         string filePath = levelFileName; /* "Levels/" +  */
@@ -139,7 +136,7 @@ public class LevelBuilder : MonoBehaviour
             var cols = Cut(rows[r].Trim()); // making sure we're not getting any excess
             for (int c = 0; c < cols.Length; ++c)
             {
-                Debug.Log(string.Format("r: {0}, c: {1}, rIndex: {2}", r, c, rIndex));
+                //Debug.Log(string.Format("r: {0}, c: {1}, rIndex: {2}", r, c, rIndex));
                 level[rIndex, c] = cols[c];
             }
 
