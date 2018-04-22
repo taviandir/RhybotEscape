@@ -9,6 +9,7 @@ TagManager:
   - Exit
   - ActionArrow
   - Wall
+  - EnemyShot
   layers:
   - Default
   - TransparentFX

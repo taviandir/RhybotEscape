@@ -9,6 +9,7 @@ public class Enemy : MonoBehaviour
     public float moveTime = 0.1f;
     public float maxViewDistance  = 8f;
     public float maxShootDistance = 5f;
+    public float shootCooldown = 3f;
     public Sprite spriteNormalMode;
     public Sprite spriteGuardMode;
     public Sprite spriteAlertMode;
@@ -35,7 +36,7 @@ public class Enemy : MonoBehaviour
         player = GameManager.instance.player;
     }
 
-    // Triggers enemy to look for the player (no action taken)
+    // Triggers enemy to look for the player (no action taken), updates sprite mode
     public bool Look()
     {
         if (CanSeePlayer())
@@ -61,13 +62,13 @@ public class Enemy : MonoBehaviour
     {
         if (lastKnownPosition != null && lastKnownPosition.Value == transform.position)
         {
-            Debug.Log("ENEMY arrived at Last Known Position");
+            //Debug.Log("ENEMY arrived at Last Known Position");
             lastKnownPosition = null;
         }
 
         // AI Logic goes here
         bool seeingPlayer = Look();
-        Debug.Log("SEE PLAYER? " + seeingPlayer);
+        //Debug.Log("SEE PLAYER? " + seeingPlayer);
 
         if (seeingPlayer)
         {
@@ -77,13 +78,21 @@ public class Enemy : MonoBehaviour
             }
             else if (enemyType == EnemyType.Ranged)
             {
-                // TODO : shoot
-                Debug.Log("ENEMY SHOOT");
+                var playerDistance = Vector3.Distance(player.transform.position, transform.position);
+                if (playerDistance <= maxShootDistance)
+                {
+                    Debug.Log("ENEMY SHOOT");
+                    Instantiate(shotPrefab, transform.position, Quaternion.identity);
+                }
+                else
+                {
+                    MoveTowardsPosition(player.transform.position);
+                }
             }
         }
-        // TODO : move towards last known position
         else if (lastKnownPosition != null)
         {
+            // move towards last known position
             MoveTowardsPosition(lastKnownPosition.Value);
         }
         else
@@ -101,6 +110,9 @@ public class Enemy : MonoBehaviour
         var xDir = diff.x > 0.1f ? 1 : diff.x < -0.1f ? -1 : 0;
         var yDir = diff.y > 0.1f ? 1 : diff.y < -0.1f ? -1 : 0;
 
+        var xDirOrig = xDir;
+        var yDirOrig = yDir;
+
         Debug.Log(diff);
 
         // check for walls (avoid failing movement because unit wanted to go diagonally into the wall)
@@ -111,16 +123,37 @@ public class Enemy : MonoBehaviour
             DoRaycast(start, start + new Vector3(xDir, yDir, 0), out hitWallCheck);
             if (hitWallCheck.transform != null && hitWallCheck.transform.CompareTag("Wall"))
             {
-                Debug.Log("ADJUSTING DIRECTION DUE TO COLLISION");
+                bool nulledX = false;
+                bool nulledY = false;
+                Debug.Log("ADJUSTING DIRECTION DUE TO COLLISION (1)");
                 if (diff.x > diff.y)
+                {
                     yDir = 0;
+                    nulledY = true;
+                }
                 else
+                {
                     xDir = 0;
+                    nulledX = true;
+                }
 
-                //DoRaycast(start, start + new Vector3(xDir, yDir, 0), out hitWallCheck);
-                //if (hitWallCheck.transform != null && hitWallCheck.transform.CompareTag("Wall"))
-                //{
-                //}
+                // check if we still hit wall despite adjustment
+                DoRaycast(start, start + new Vector3(xDir, yDir, 0), out hitWallCheck);
+                if (hitWallCheck.transform != null && hitWallCheck.transform.CompareTag("Wall"))
+                {
+                    Debug.Log("ADJUSTING DIRECTION DUE TO COLLISION (2)");
+                    // still hitting wall
+                    if (nulledX)
+                    {
+                        xDir = xDirOrig;
+                        yDir = 0;
+                    }
+                    else if (nulledY)
+                    {
+                        yDir = yDirOrig;
+                        xDir = 0;
+                    }
+                }
             }
         }
 
@@ -146,13 +179,13 @@ public class Enemy : MonoBehaviour
 
         if (hit.transform == null)
         {
-            Debug.Log("ENEMY DOESNT SEE PLAYER");
+            //Debug.Log("ENEMY DOESNT SEE PLAYER");
             return false;
         }
         
-        Debug.Log("ENEMY see: " + hit.transform.gameObject.name);
+        //Debug.Log("ENEMY see: " + hit.transform.gameObject.name);
         var distance = Vector3.Distance(transform.position, hit.transform.position);
-        Debug.Log("Distance:" + distance);
+        //Debug.Log("Distance:" + distance);
         return hit.transform.CompareTag("Player") && distance < maxViewDistance;
     }
 

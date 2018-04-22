@@ -111,10 +111,10 @@ public class Player : MonoBehaviour
     {
         if (energy <= 0)
         {
+            Debug.LogWarning("GAME OVER");
             // GAME OVER
             enabled = false;
             // TODO : trigger something to indicate that game is over
-            Debug.LogWarning("GAME OVER");
         }
     }
 
