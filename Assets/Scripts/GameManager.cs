@@ -11,10 +11,10 @@ public class GameManager : MonoBehaviour
 
     [HideInInspector] public Player player;
     [HideInInspector] public ActionManager actionManager;
+    public int level = 1;
     public int energy = 100;
 
     private LevelBuilder levelBuilder;
-    private int level = 1;
 
     void Awake()
     {
