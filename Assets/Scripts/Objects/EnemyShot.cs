@@ -52,9 +52,9 @@ public class EnemyShot : MonoBehaviour
             var player = other.GetComponent<Player>();
             player.GotShot(damage);
         }
-        else if (other.CompareTag("Enemy"))
+        else if (other.CompareTag("Enemy") || other.CompareTag("EnemyShot"))
         {
-            // pass through enemies (including self)
+            // pass through enemies (including self) and other bullets
             return;
         }
         Destroy(gameObject);

@@ -109,7 +109,9 @@ public class TimingManager : MonoBehaviour
                 Quaternion.identity) as GameObject;
 
         var arrowScript = spawnedArrow.GetComponent<MoveTimingObject>();
-        arrowScript.Init(arrowMoveTime);
+        var levelBoost = GameManager.instance.level / (1 + 1) * -0.1f;
+        var speed = arrowMoveTime + levelBoost;
+        arrowScript.Init(speed);
         spawnedArrow.transform.parent = transform;
     }
 
